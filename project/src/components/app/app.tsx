@@ -1,4 +1,4 @@
-import RenderMain from '../render-main/render-main';
+import Main from '../main/main';
 
 type AppProps = {
   countOffer: number,
@@ -6,7 +6,7 @@ type AppProps = {
 
 function App({countOffer}: AppProps): JSX.Element {
   return (
-    <RenderMain countOffer = {countOffer}/>
+    <Main countOffer = {countOffer}/>
   );
 }
 
