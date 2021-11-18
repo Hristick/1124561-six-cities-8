@@ -1,35 +1,46 @@
 import {Switch, Route, BrowserRouter} from 'react-router-dom';
-import { AppRoute, AuthorizationStatus } from '../../const';
+import { AppRoute, AuthorizationStatus} from '../../const';
+import { Offers } from '../../types/offers';
+import { Reviews } from '../../types/reviews';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
 import Main from '../main/main';
 import Login from '../login/login';
 import Favorites from '../favorites/favorites';
-import Property from '../property/property';
 import PrivateRoute from '../private-route/private-route';
+import Room from '../room/room';
 
 type AppProps = {
-  countOffer: number,
+  offersCount: number,
+  offers: Offers,
+  reviews: Reviews[],
 }
 
-function App({countOffer}: AppProps): JSX.Element {
+function App({offersCount, offers, reviews}: AppProps): JSX.Element {
+
+
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path={AppRoute.Root}>
-          <Main countOffer={countOffer} />
+          <Main
+            offers={offers}
+            countOffer={ offersCount}
+          />
         </Route>
         <Route exact path={AppRoute.SignIn}>
           <Login />
         </Route>
         <PrivateRoute
-          exact
           path={AppRoute.Favorites}
-          render={() => <Favorites />}
+          render={() => <Favorites  offers={offers}/>}
           authorizationStatus={AuthorizationStatus.NoAuth}
         >
         </PrivateRoute>
         <Route exact path={AppRoute.Room}>
-          <Property />
+          <Room
+            offer = { offers[0] }
+            reviews = { reviews }
+          />
         </Route>
         <Route>
           <NotFoundPage />
